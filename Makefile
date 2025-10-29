@@ -5,7 +5,7 @@ DFU_PACKAGE      := $(OUTPUT_DIRECTORY)/nrf52840_xxaa.dfu
 DFU_PORT         ?= /dev/ttyACM0
 
 
-SDK_ROOT ?= ../esl-nsdk-master
+SDK_ROOT ?= ${HOME}/esl-nsdk-master
 PROJ_DIR ?=  .
 
 $(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: \
