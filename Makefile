@@ -1,4 +1,4 @@
-PROJECT_NAME     := blinky_pca10059_mbr
+ROJECT_NAME     := blinky_pca10059_mbr
 TARGETS          := nrf52840_xxaa
 OUTPUT_DIRECTORY := _build
 DFU_PACKAGE      := $(OUTPUT_DIRECTORY)/nrf52840_xxaa.dfu
@@ -6,9 +6,12 @@ DFU_PORT         ?= /dev/ttyACM0
 
 
 SDK_ROOT := ../esl-nsdk
-PROJ_DIR ?=  .
+PROJ_DIR := .
+TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
 
-$(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: \
+include $(SDK_ROOT)/components/toolchain/gcc/Makefile.common
+
+$(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: 
   LINKER_SCRIPT  := blinky_gcc_nrf52.ld
 
 # Source files common to all targets
@@ -32,7 +35,6 @@ SRC_FILES += \
   $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(PROJ_DIR)/main.c \
   $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52840.c \
-  
 
 # Include folders common to all targets
 INC_FOLDERS += \
@@ -54,7 +56,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/integration/nrfx \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
   $(SDK_ROOT)/components/libraries/atomic \
-  $(SDK_ROOT)/components/boards \
+  $(SDK_ROOT)/components/boards\
   $(SDK_ROOT)/components/libraries/memobj \
   $(SDK_ROOT)/external/fprintf \
   $(SDK_ROOT)/components/libraries/log/src \
@@ -66,13 +68,7 @@ LIB_FILES += \
 OPT = -O3 -g3
 # Uncomment the line below to enable link time optimization
 #OPT += -flto
-install: $(OUTPUT_DIRECTORY)/nrf52840_xxaa.hex
-	@echo Flashing: $<
-	nrfjprog -f nrf52 --program $< --sectorerase
-	nrfjprog -f nrf52 --reset
 
-# Include common Makefile
-include $(SDK_ROOT)/components/toolchain/gcc/Makefile.common
 # C flags common to all targets
 CFLAGS += $(OPT)
 CFLAGS += -DBOARD_PCA10059
@@ -99,7 +95,7 @@ ASMFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 ASMFLAGS += -DBOARD_PCA10059
 ASMFLAGS += -DBSP_DEFINES_ONLY
 ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
-ASMFLAGS += -DFLOAT_ABI_HARD
+ASMFLAGS += -DFLOAT_ABI_HARDcode
 ASMFLAGS += -DMBR_PRESENT
 ASMFLAGS += -DNRF52840_XXAA
 
@@ -134,10 +130,6 @@ help:
 	@echo		nrf52840_xxaa
 	@echo		flash      - flashing binary
 
-TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
-
-
-include $(TEMPLATE_PATH)/Makefile.common
 
 $(foreach target, $(TARGETS), $(call define_target, $(target)))
 
@@ -153,8 +145,7 @@ $(DFU_PACKAGE): $(OUTPUT_DIRECTORY)/nrf52840_xxaa.hex
 	   --sd-req 0x0,0x102 \
 	   --sd-id 0x102 \
 	   --application $< \
-	   --softdevice $(SDK_ROOT)/components/softdevice/s113/hex/s113_nrf52_7.2.0_softdevice.hex $@
-
+	   
 dfu: $(DFU_PACKAGE)
 	@echo Performing DFU with generated package
-	nrfutil dfu usb-serial -pkg $< -p $(DFU_PORT) -b 115200
+	nrfutil dfu usb-serial -pkg $< -p $(DFU_PORT) -b 1152
