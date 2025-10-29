@@ -5,7 +5,7 @@ DFU_PACKAGE      := $(OUTPUT_DIRECTORY)/nrf52840_xxaa.dfu
 DFU_PORT         ?= /dev/ttyACM0
 
 
-SDK_ROOT ?= ${HOME}/esl-nsdk-master
+SDK_ROOT := ../esl-nsdk
 PROJ_DIR ?=  .
 
 $(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: \
@@ -43,7 +43,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/util \
-  ./config \
   $(SDK_ROOT)/components/libraries/balloc \
   $(SDK_ROOT)/components/libraries/ringbuf \
   $(SDK_ROOT)/modules/nrfx/hal \
