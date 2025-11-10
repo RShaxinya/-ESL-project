@@ -1,47 +1,16 @@
 #include "nrf_gpio.h"
-
-#define LED_RED     23
-#define LED_GREEN   24  
-#define LED_BLUE    25
-#define LED_YELLOW  26
-
+#include "gpio_led.h"
 
 void simple_delay(uint32_t milliseconds) {
-    for (volatile uint32_t i = 0; i < milliseconds * 1000; i++) {
-        
-    }
-}
-
-void blink_single_led(uint32_t led_pin, int count) {
-    for (int i = 0; i < count; i++) {
-        nrf_gpio_pin_write(led_pin, 0);  
-        simple_delay(300);
-        nrf_gpio_pin_write(led_pin, 1); 
-        simple_delay(300);
-    }
+    for (volatile uint32_t i = 0; i < milliseconds * 1000; i++);
 }
 
 int main(void) {
-    nrf_gpio_cfg_output(LED_RED);
-    nrf_gpio_cfg_output(LED_GREEN);
-    nrf_gpio_cfg_output(LED_BLUE);
-    nrf_gpio_cfg_output(LED_YELLOW);
+    gpio_led_init();
     
-    nrf_gpio_pin_write(LED_RED, 1);
-    nrf_gpio_pin_write(LED_GREEN, 1);
-    nrf_gpio_pin_write(LED_BLUE, 1);
-    nrf_gpio_pin_write(LED_YELLOW, 1);
-
-    while (true) {
-        blink_single_led(LED_RED, 6);
-        simple_delay(1000);  
-        
-        blink_single_led(LED_GREEN, 4);
-        simple_delay(1000);  
-        
-        simple_delay(2000); 
-        
-        blink_single_led(LED_YELLOW, 4);
-        simple_delay(2000);  // Пауза 2 сек
+    while (1) {
+        bool button_state = (nrf_gpio_pin_read(BUTTON_PIN) == 0);
+        process_led_sequence(button_state);
+        simple_delay(50);
     }
 }
