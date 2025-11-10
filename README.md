@@ -1,32 +1,18 @@
-# -ESL-project
+# Workshop 3: GPIO LED Control
 
-nRF52840 Blinky Project
+## Task
+Implement GPIO HAL functions to control LED sequence with button:
+- Play sequence only when button pressed
+- Continue from previous position  
+- Optional: LED stays on when released
 
-## Структура проекта
-.
-├── main.c # Основной код с логикой мигания светодиодов
-├── Makefile # Система сборки проекта
-├── sdk_config.h # Конфигурация компонентов SDK
-├── nrf52840_xxaa.hex # Готовая прошивка
-└── blinky_gcc_nrf52.ld # Скрипт линковки
-Плата nRF52840 содержит 4 цветных светодиода:
-- **LED1** - Желтый/Зеленый
-- **LED2** - Красный  
-- **LED3** - Зеленый
-- **LED4** - Синий
+## Files
+- `main.c` - Main application with button handling
+- `gpio_led.h/c` - LED sequence control functions
+- `nrf_gpio.h` - GPIO HAL functions
 
-## Алгоритм работы
-
-Приложение мигает светодиодами в соответствии с ID устройства:
-- Каждая цифра ID определяет количество миганий соответствующего светодиода
-- Например, для ID `#4321`:
-  - LED1 мигает 4 раза
-  - LED2 мигает 3 раза
-  - LED3 мигает 2 раза
-  - LED4 мигает 1 раз
-- Между последовательностями - пауза
-
-- ## Сборка и прошивка
-
-```bash
-make flash
+## Features
+- Custom GPIO implementation (no boards.h)
+- Button-controlled playback
+- State memory between presses
+- Modular code structure
