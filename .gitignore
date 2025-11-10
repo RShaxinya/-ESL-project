@@ -1,6 +1,43 @@
-
-*.hex
-*.out
-*.map
+# Object files
 *.o
-_build/
+*.ko
+*.obj
+*.elf
+
+# Libraries
+*.lib
+*.a
+
+# Shared objects
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug files
+*.dSYM/
+*.su
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build directories
+build/
+Debug/
+Release/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Project specific
+workshop3.exe
+*.hex
+*.map
