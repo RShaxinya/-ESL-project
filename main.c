@@ -92,6 +92,6 @@ int main(void) {
     while (1) {
         bool button_state = (nrf_gpio_pin_read(BUTTON_PIN) == 0);
         process_led_sequence(button_state);
-        simple_delay(500); // Задержка 500ms вместо 50 для лучшей видимости
+        simple_delay(500); 
     }
 }
