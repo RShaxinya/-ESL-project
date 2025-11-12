@@ -10,6 +10,9 @@ Implement GPIO HAL functions to control LED sequence with button:
 - `main.c` - Main application with button handling
 - `gpio_led.h/c` - LED sequence control functions
 - `nrf_gpio.h` - GPIO HAL functions
+- ## Сборка и запуск:
+make
+./rgb_app
 
 ## Features
 - Custom GPIO implementation (no boards.h)
