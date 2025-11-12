@@ -2,10 +2,10 @@
 #include <stdint.h>
 
 
-#define BUTTON_PIN ((1 << 5) | 6)   // PORT 1, PIN 6
-#define LED_RED    ((0 << 5) | 8)   // PORT 0, PIN 8
-#define LED_GREEN  ((1 << 5) | 9)   // PORT 1, PIN 9  
-#define LED_BLUE   ((0 << 5) | 12)  // PORT 0, PIN 12
+#define BUTTON_PIN ((1 << 5) | 6)   
+#define LED_RED    ((0 << 5) | 8)   
+#define LED_GREEN  ((1 << 5) | 9)  
+#define LED_BLUE   ((0 << 5) | 12)  
 
 
 void nrf_gpio_cfg_output(uint32_t pin) {
