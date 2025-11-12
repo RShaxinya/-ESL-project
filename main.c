@@ -42,7 +42,7 @@ void set_rgb_color(bool red, bool green, bool blue) {
 
 void gpio_led_init(void) {
     
-    nrf_gpio_cfg_input(BUTTON_PIN, 1); // PULLUP
+    nrf_gpio_cfg_input(BUTTON_PIN, 1); 
     
     
     nrf_gpio_cfg_output(LED_RED);
@@ -63,12 +63,12 @@ void process_led_sequence(bool button_state) {
     if (button_state) {
         
         switch(color_state) {
-            case 0: set_rgb_color(1, 0, 0); break; // Красный
-            case 1: set_rgb_color(0, 1, 0); break; // Зеленый
-            case 2: set_rgb_color(0, 0, 1); break; // Синий
-            case 3: set_rgb_color(1, 1, 0); break; // Желтый
-            case 4: set_rgb_color(0, 1, 1); break; // Голубой
-            case 5: set_rgb_color(1, 0, 1); break; // Пурпурный
+            case 0: set_rgb_color(1, 0, 0); break; 
+            case 1: set_rgb_color(0, 1, 0); break; 
+            case 2: set_rgb_color(0, 0, 1); break; 
+            case 3: set_rgb_color(1, 1, 0); break; 
+            case 4: set_rgb_color(0, 1, 1); break;
+            case 5: set_rgb_color(1, 0, 1); break; 
         }
         color_state = (color_state + 1) % 6;
     } else {
