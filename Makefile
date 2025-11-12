@@ -1,6 +1,10 @@
-all:
-	echo "Build successful - RGB simulation ready"
-	echo "For hardware deployment: connect nRF SDK"
-	
+CC = gcc
+CFLAGS = -std=c99 -Wall
+TARGET = rgb_app.exe
+SOURCES = main.c
+
+$(TARGET): $(SOURCES)
+	$(CC) $(CFLAGS) -o $(TARGET) $(SOURCES)
+
 clean:
-	del rgb_app.exe 2>nul || true
+	del $(TARGET)
