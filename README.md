@@ -23,5 +23,3 @@ This project implements a PWM-based LED controller for nRF52840 Dongle with smoo
 make clean
 make
 
-q
-EOf
