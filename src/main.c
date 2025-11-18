@@ -17,7 +17,7 @@
 
 void SystemInit(void) {}
 
-// Simple delay function
+
 void delay_ms(uint32_t ms) {
     for (uint32_t i = 0; i < ms * 5000; i++) {
         __asm__ volatile ("nop");
@@ -47,7 +47,7 @@ uint32_t gpio_pin_read(uint32_t pin) {
 }
 
 int main(void) {
-    // Initialize GPIO
+    
     volatile uint32_t* dirset0 = (volatile uint32_t*)(NRF_P0_BASE + GPIO_DIRSET_OFFSET);
     volatile uint32_t* dirset1 = (volatile uint32_t*)(NRF_P1_BASE + GPIO_DIRSET_OFFSET);
     *dirset0 = (1 << 6) | (1 << 8);  
