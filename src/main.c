@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-// Register definitions
+
 #define NRF_P0_BASE 0x50000000
 #define NRF_P1_BASE 0x50000300
 #define GPIO_OUTSET_OFFSET 0x508
@@ -9,11 +9,11 @@
 #define GPIO_IN_OFFSET 0x510
 #define GPIO_PIN_CNF_OFFSET 0x700
 
-// LED pins for nRF52840 Dongle
-#define LED_RED    (0 * 32 + 6)   // P0.06
-#define LED_GREEN  (0 * 32 + 8)   // P0.08  
-#define LED_BLUE   (1 * 32 + 9)   // P1.09
-#define BUTTON_PIN (1 * 32 + 6)   // P1.06
+
+#define LED_RED    (0 * 32 + 6)   
+#define LED_GREEN  (0 * 32 + 8)    
+#define LED_BLUE   (1 * 32 + 9)   
+#define BUTTON_PIN (1 * 32 + 6)   
 
 void SystemInit(void) {}
 
@@ -50,29 +50,29 @@ int main(void) {
     // Initialize GPIO
     volatile uint32_t* dirset0 = (volatile uint32_t*)(NRF_P0_BASE + GPIO_DIRSET_OFFSET);
     volatile uint32_t* dirset1 = (volatile uint32_t*)(NRF_P1_BASE + GPIO_DIRSET_OFFSET);
-    *dirset0 = (1 << 6) | (1 << 8);  // Red & Green as outputs
-    *dirset1 = (1 << 9);             // Blue as output
+    *dirset0 = (1 << 6) | (1 << 8);  
+    *dirset1 = (1 << 9);             
     
-    // Configure button with pullup
+    
     volatile uint32_t* button_cnf = (volatile uint32_t*)(NRF_P1_BASE + GPIO_PIN_CNF_OFFSET + 6 * 4);
-    *button_cnf = (3 << 2);  // Pullup
+    *button_cnf = (3 << 2);  
     
-    // Turn off all LEDs initially
+    
     gpio_pin_set(LED_RED);
     gpio_pin_set(LED_GREEN);
     gpio_pin_set(LED_BLUE);
     
-    // PWM variables
+    
     uint16_t pwm_counter = 0;
     uint16_t duty_cycle = 0;
     uint8_t increasing = 1;
     uint8_t current_led_index = 0;
     uint8_t blinking_enabled = 1;
     
-    // Device ID sequence: A,B,C,D = Red, Green, Blue, Red
+    
     const uint8_t led_sequence[] = {LED_RED, LED_GREEN, LED_BLUE, LED_RED};
     
-    // Button state
+    
     uint32_t last_press_time = 0;
     uint8_t click_count = 0;
     uint32_t time_counter = 0;
@@ -81,15 +81,15 @@ int main(void) {
         time_counter++;
         
         if (blinking_enabled) {
-            // Software PWM implementation (1kHz equivalent)
-            uint8_t current_led = led_sequence[current_led_index];
             
-            // Turn off all LEDs first
+uint8_t current_led = led_sequence[current_led_index];
+            
+            
             gpio_pin_set(LED_RED);
             gpio_pin_set(LED_GREEN);
             gpio_pin_set(LED_BLUE);
             
-            // PWM: LED ON when counter < duty_cycle
+            
             if (pwm_counter < duty_cycle) {
                 gpio_pin_clear(current_led);
             }
@@ -98,7 +98,7 @@ int main(void) {
             if (pwm_counter >= 1000) {
                 pwm_counter = 0;
                 
-                // Smooth duty cycle change: 0% -> 100% -> 0%
+                
                 if (increasing) {
                     duty_cycle += 5;
                     if (duty_cycle >= 1000) {
@@ -110,20 +110,20 @@ int main(void) {
                     if (duty_cycle <= 0) {
                         duty_cycle = 0;
                         increasing = 1;
-                        // Move to next LED in sequence (A,B,C,D)
+                        
                         current_led_index = (current_led_index + 1) % 4;
                     }
                 }
             }
         }
         
-        // Button handling with double-click detection
+        
         if (!gpio_pin_read(BUTTON_PIN)) {
             delay_ms(50);  // Debounce
             if (!gpio_pin_read(BUTTON_PIN)) {
                 uint32_t current_time = time_counter;
                 
-                // Double-click detection (300ms window)
+                
                 if (current_time - last_press_time < 300) {
                     // Double-click: toggle blinking
                     blinking_enabled = !blinking_enabled;
@@ -133,7 +133,7 @@ int main(void) {
                 }
                 last_press_time = current_time;
                 
-                // Wait for button release
+                
                 while (!gpio_pin_read(BUTTON_PIN)) {
                     delay_ms(10);
                 }
