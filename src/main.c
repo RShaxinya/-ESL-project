@@ -23,8 +23,6 @@ void delay_ms(uint32_t ms) {
         __asm__ volatile ("nop");
     }
 }
-
-// GPIO functions
 void gpio_pin_set(uint32_t pin) {
     uint32_t port = pin / 32;
     uint32_t pin_num = pin % 32;
@@ -119,13 +117,13 @@ uint8_t current_led = led_sequence[current_led_index];
         
         
         if (!gpio_pin_read(BUTTON_PIN)) {
-            delay_ms(50);  // Debounce
+            delay_ms(50);  
             if (!gpio_pin_read(BUTTON_PIN)) {
                 uint32_t current_time = time_counter;
                 
                 
                 if (current_time - last_press_time < 300) {
-                    // Double-click: toggle blinking
+                    
                     blinking_enabled = !blinking_enabled;
                     click_count = 0;
                 } else {
@@ -141,7 +139,7 @@ uint8_t current_led = led_sequence[current_led_index];
             }
         }
         
-        delay_ms(1);  // Main loop delay
+        delay_ms(1);  
     }
     
     return 0;
