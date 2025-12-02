@@ -1,4 +1,3 @@
-
 PROJECT_NAME     := blinky_pca10059_mbr
 TARGETS          := nrf52840_xxaa
 OUTPUT_DIRECTORY := _build
@@ -11,7 +10,6 @@ PROJ_DIR := ../
 $(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: \
   LINKER_SCRIPT  := blinky_gcc_nrf52.ld
 
-# Source files common to all targets
 SRC_FILES += \
   $(PROJ_DIR)/main.c \
   $(SDK_ROOT)/modules/nrfx/mdk/gcc_startup_nrf52840.S \
@@ -55,7 +53,6 @@ SRC_FILES += \
   $(SDK_ROOT)/external/fprintf/nrf_fprintf_format.c \
   $(SDK_ROOT)/components/libraries/fifo/app_fifo.c \
 
-# Include folders common to all targets
 INC_FOLDERS += \
   $(PROJ_DIR)/config \
   $(PROJ_DIR) \
