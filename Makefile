@@ -11,7 +11,7 @@ PROJ_DIR := ../
 $(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: \
   LINKER_SCRIPT  := blinky_gcc_nrf52.ld
 
-# Source files common to all targets
+
 SRC_FILES += \
   $(PROJ_DIR)/main.c \
   $(PROJ_DIR)/cli.c\
@@ -56,7 +56,7 @@ SRC_FILES += \
   $(SDK_ROOT)/external/fprintf/nrf_fprintf_format.c \
   $(SDK_ROOT)/components/libraries/fifo/app_fifo.c \
 
-# Include folders common to all targets
+
 INC_FOLDERS += \
   $(PROJ_DIR)/config \
   $(PROJ_DIR) \
@@ -97,7 +97,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/external/utf_converter \
   $(SDK_ROOT)/integration/nrfx/legacy \
 
-# Libraries common to all targets
+
 LIB_FILES += \
 
 CLI_SOURCE_FILES = \
@@ -122,12 +122,12 @@ ifdef ESTC_USB_CLI_ENABLED
   endif
 endif
   
-# Optimization flags
+
 OPT = -O3 -g3
 # Uncomment the line below to enable link time optimization
 #OPT += -flto
 
-# C flags common to all targets
+
 CFLAGS += $(OPT)
 CFLAGS += -DBOARD_PCA10059
 CFLAGS += -DBSP_DEFINES_ONLY
@@ -165,7 +165,6 @@ ASMFLAGS += -DNRF52840_XXAA
 ASMFLAGS += -DAPP_TIMER_V2
 ASMFLAGS += -DAPP_TIMER_V2_RTC1_ENABLED
 
-# Linker flags
 LDFLAGS += $(OPT)
 LDFLAGS += -mthumb -mabi=aapcs -L$(SDK_ROOT)/modules/nrfx/mdk -T$(LINKER_SCRIPT)
 LDFLAGS += -mcpu=cortex-m4
@@ -180,8 +179,7 @@ nrf52840_xxaa: CFLAGS += -D__STACK_SIZE=8192
 nrf52840_xxaa: ASMFLAGS += -D__HEAP_SIZE=8192
 nrf52840_xxaa: ASMFLAGS += -D__STACK_SIZE=8192
 
-# Add standard libraries at the very end of the linker input, after all objects
-# that may need symbols provided by these libraries.
+
 LIB_FILES += -lc -lnosys -lm
 
 .PHONY: default help
@@ -189,7 +187,7 @@ LIB_FILES += -lc -lnosys -lm
 # Default target - first one defined
 default: nrf52840_xxaa
 
-# Print all targets that can be built
+
 help:
 	@echo following targets are available:
 	@echo		nrf52840_xxaa
